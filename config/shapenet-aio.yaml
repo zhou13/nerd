@@ -1,0 +1,53 @@
+io:
+  logdir: logs/
+  datadir: data/shapenet-r2n2
+  dataset: ShapeNet
+  resume_from:
+  num_workers: 4
+  num_visualization: 8
+  validation_interval: 72000
+  validation_debug: 360
+  depth_min: 0.64
+  depth_max: 1.23
+
+model:
+  backbone: mvsnet
+  backbone2d: ResNet
+  batch_size: 6
+
+  num_sym: 1
+  do_refine: false
+  cat_depth_feature: false
+  large_volumenet: false
+  save_confidence: false
+
+  # loss should be in ["L1_smooth", "L1", "L2", "Ordinal"]
+  loss: L1
+  num_depth: 64
+
+  detection:
+    enabled: true
+    sample_hard_negative: false
+    fc_channel: 512
+    n_level: 4
+    n_theta: 48
+    theta:
+      - 0.36258552050416676  # deg: 20.774620037442926
+      - 0.11241163585977465  # deg: 6.4407123029265465
+      - 0.03482301585266065  # deg: 1.9952118382746151
+      - 0.010784006776847217  # deg: 0.6178780745538237
+    weight_depth: [0.01, 0.1, 0.3, 1.0, 1.0, 1.0, 1.0, 1.0]
+    # weight_depth: [0.01, 0.01, 0.05, 0.10, .5, .5, .5, .5]
+    weight_detection: 0.03
+    dropout: 0.0
+
+optim:
+  name: Adam
+  max_epoch: 32
+  lr_decay_epoch: [24]
+  params:
+    lr: 3.0e-4
+    amsgrad: true
+    weight_decay: 1.0e-07
+
+# vim: set sw=2 nowrap:
