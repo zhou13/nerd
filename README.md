@@ -71,7 +71,7 @@ cd ..
 ```
 
 If `gdrive-download.sh` does not work for you, you can download the pre-processed datasets
-manually from our [Google Drive](https://drive.google.com/drive/folders/1zdHsSb-xHhY8imIy3uWt_XfBW_YQX4Vh) and proceed accordingly.
+manually from our [Google Drive](https://drive.google.com/file/d/1zdHsSb-xHhY8imIy3uWt_XfBW_YQX4Vh) and proceed accordingly.
 
 ### Training
 Execute the following commands to train the neural networks from scratch with four GPUs (specified by `-d 0,1,2,3`):
