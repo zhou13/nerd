@@ -68,10 +68,17 @@ class Trainer(object):
         training = self.model.training
         self.model.eval()
 
-        viz = osp.join(self.out, "viz", f"{self.iteration * self.batch_size:09d}")
-        npz = osp.join(self.out, "npz", f"{self.iteration * self.batch_size:09d}")
-        osp.exists(viz) or os.makedirs(viz)
-        osp.exists(npz) or os.makedirs(npz)
+        n_image = self.batch_size * self.iteration
+        n_image1 = self.batch_size * max(0, self.iteration - 1)
+        save_checkpoint = (
+            n_image // CI.checkpoint_interval != n_image1 // CI.checkpoint_interval
+        )
+
+        if save_checkpoint:
+            viz = osp.join(self.out, "viz", f"{self.iteration * self.batch_size:09d}")
+            npz = osp.join(self.out, "npz", f"{self.iteration * self.batch_size:09d}")
+            osp.exists(viz) or os.makedirs(viz)
+            osp.exists(npz) or os.makedirs(npz)
 
         total_loss = 0
         self.metrics[...] = 0
@@ -81,16 +88,21 @@ class Trainer(object):
                 total_loss += self._loss(result)
                 for i in range(len(input["image"])):
                     index = batch_idx * self.batch_size + i
-                    # np.savez(
-                    #     f"{npz}/{index:06}.npz",
-                    #     **{k: v[i].cpu().numpy() for k, v in result["preds"].items()},
-                    # )
-                    if index < CI.num_visualization:
-                        self.model.save_figures(
-                            {k: v[i] for k, v in input.items()},
-                            {k: v[i] for k, v in result["preds"].items()},
-                            f"{viz}/{index:06}",
-                        )
+                    if save_checkpoint:
+                        if CI.checkpoint_save_prediction:
+                            np.savez(
+                                f"{npz}/{index:06}.npz",
+                                **{
+                                    k: v[i].cpu().numpy()
+                                    for k, v in result["preds"].items()
+                                },
+                            )
+                        if index < CI.num_visualization:
+                            self.model.save_figures(
+                                {k: v[i] for k, v in input.items()},
+                                {k: v[i] for k, v in result["preds"].items()},
+                                f"{viz}/{index:06}",
+                            )
 
         with open(f"{self.out}/loss.csv", "a") as fout:
             print(
@@ -113,17 +125,18 @@ class Trainer(object):
                 "model_state_dict": self.model.state_dict(),
                 "best_mean_loss": self.best_mean_loss,
             },
-            osp.join(self.out, "checkpoint_latest.pth.tar"),
+            osp.join(self.out, "checkpoint_latest.pth"),
         )
-        shutil.copy(
-            osp.join(self.out, "checkpoint_latest.pth.tar"),
-            osp.join(npz, "checkpoint.pth.tar"),
-        )
+        if save_checkpoint:
+            shutil.copy(
+                osp.join(self.out, "checkpoint_latest.pth"),
+                osp.join(npz, "checkpoint.pth"),
+            )
         if self.mean_loss < self.best_mean_loss:
             self.best_mean_loss = self.mean_loss
             shutil.copy(
-                osp.join(self.out, "checkpoint_latest.pth.tar"),
-                osp.join(self.out, "checkpoint_best.pth.tar"),
+                osp.join(self.out, "checkpoint_latest.pth"),
+                osp.join(self.out, "checkpoint_best.pth"),
             )
 
         if training:

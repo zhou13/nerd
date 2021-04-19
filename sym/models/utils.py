@@ -76,11 +76,9 @@ class ConvBnReLU3D(nn.Module):
             bias=False,
         )
         self.bn = nn.BatchNorm3d(out_channels)
-        # self.abn = InPlaceABN(out_channels)
 
     def forward(self, x):
         return F.relu(self.bn(self.conv(x)), inplace=True)
-        # return self.abn(self.conv(x))
 
 
 class ConvTrBnReLU3D(nn.Module):
@@ -96,11 +94,9 @@ class ConvTrBnReLU3D(nn.Module):
             bias=False,
         )
         self.bn = nn.BatchNorm3d(out_channels)
-        # self.abn = InPlaceABN(out_channels)
 
     def forward(self, x):
         return F.relu(self.bn(self.conv(x)), inplace=True)
-        # return self.abn(self.conv(x))
 
 
 def resample(x, scale_factor):
@@ -118,7 +114,7 @@ def warp(x0, S, gamma):
         gamma: [D]
 
     Returns:
-        3D cost volume with shape [N, C, D, H, W]
+        3D cost volume of shape [N, C, D, H, W]
     """
     N, C, H, W = x0.shape
     D = len(gamma)
@@ -145,7 +141,7 @@ def depth_softargmin(cost, gamma):
     """Return a depth map with shape [N, 1, H, W].
 
     Arguments:
-        cost: 3D cost volume tensor with shape [N, D, H, W]
+        cost: 3D cost volume tensor of shape [N, D, H, W]
         gamma: discrete depth values [D]
 
     Returns:

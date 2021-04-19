@@ -15,7 +15,6 @@ mpl.font_manager._rebuild()
 
 error_types = [
     ("err_depth_avg", "Depth Error (Average L1)"),
-    ("err_depth_SIL", "Depth Error (SIL)"),
 ]
 xlims = [0.08, 0.01]
 

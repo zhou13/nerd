@@ -12,7 +12,6 @@ Options:
    -d --devices <devices>            Comma seperated GPU devices [default: 0]
    -i --identifier <identifier>      Folder name [default: default-identifier]
    --from <checkpoint>               Path to a checkpoint
-   --ignore-optim                    Ignore optim when restoring from a checkpoint
 """
 
 import datetime
@@ -36,7 +35,7 @@ from docopt import docopt
 
 import sym
 from sym.config import CI, CM, CO, C, load_config
-from sym.datasets import ShapeNetDataset
+from sym.datasets import ShapeNetDataset, Pix3dDataset
 
 
 def git_hash():
@@ -105,6 +104,8 @@ def main():
     }
     if CI.dataset == "ShapeNet":
         Dataset = ShapeNetDataset
+    elif CI.dataset == "Pix3D":
+        Dataset = Pix3dDataset
     else:
         raise NotImplementedError
 
@@ -139,8 +140,6 @@ def main():
     else:
         raise NotImplementedError
 
-    if resume_from and not args["--ignore-optim"]:
-        optim.load_state_dict(checkpoint["optim_state_dict"])
     outdir = get_outdir(args["--identifier"])
     shutil.copyfile(config_file, osp.join(outdir, "config_origin.yaml"))
     print("outdir:", outdir)
