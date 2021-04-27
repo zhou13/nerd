@@ -6,7 +6,7 @@ This repository contains the official PyTorch implementation of the paper:  *[Yi
 
 ## Introduction
 
-We present NeRD, a **N**eural 3D **R**eflection Symmetry **D**etector, which combines the strength of learning-based recognition and geometry-based reconstruction to accurately recover the normal direction of objects' mirror planes. NeRD uses coarse-to-fine strategy to enumerate the symmetry planes and then find the best ones by building 3D cost volumes to examine the intra-image pixel correspondence from the symmetry.
+We present NeRD, a **Ne**ural 3D **R**eflection Symmetry **D**etector, which combines the strength of learning-based recognition and geometry-based reconstruction to accurately recover the normal direction of objects' mirror planes. NeRD uses coarse-to-fine strategy to enumerate the symmetry planes and then find the best ones by building 3D cost volumes to examine the intra-image pixel correspondence from the symmetry.
 
 ## Qualitative Measures
 
