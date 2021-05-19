@@ -1,6 +1,6 @@
 # NeRD: Neural 3D Reflection Symmetry Detector
 
-This repository contains the official PyTorch implementation of the paper:  *[Yichao Zhou](https://yichaozhou.com), [Shichen Liu](https://shichenliu.github.io/), [Yi Ma](https://people.eecs.berkeley.edu/~yima/). "[NeRD: Neural 3D Reflection Symmetry Detector](https://arxiv.org/abs/2006.10042)"*. CVPR 2021.
+This repository contains the official PyTorch implementation of the paper:  *[Yichao Zhou](https://yichaozhou.com), [Shichen Liu](https://shichenliu.github.io/), [Yi Ma](https://people.eecs.berkeley.edu/~yima/). "[NeRD: Neural 3D Reflection Symmetry Detector](https://arxiv.org/abs/2105.03211)"*. CVPR 2021.
 
 ![teaser](figs/teaser.png)
 
