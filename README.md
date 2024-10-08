@@ -66,15 +66,15 @@ mkdir data logs results
 Make sure `curl` is installed on your system and execute
 ```bash
 cd data
-../misc/gdrive-download.sh 1zdHsSb-xHhY8imIy3uWt_XfBW_YQX4Vh shapenet-r2n2.zip
-../misc/gdrive-download.sh 1tzR5WDrbYTFkVu58p8qad6CXw6Bw2yNt new_pix3d.zip
+wget https://huggingface.co/yichaozhou/nerd/resolve/main/ShapeNet-R2N2.zip
+wget https://huggingface.co/yichaozhou/nerd/resolve/main/new_pix3d.zip
 unzip *.zip
 rm *.zip
 cd ..
 ```
 
-If `gdrive-download.sh` does not work for you, you can download the pre-processed datasets
-manually for [ShapeNet](https://drive.google.com/file/d/1zdHsSb-xHhY8imIy3uWt_XfBW_YQX4Vh) and [Pix3D](https://drive.google.com/file/d/1tzR5WDrbYTFkVu58p8qad6CXw6Bw2yNt), and proceed accordingly.
+If `wget` does not work for you, you can download the pre-processed datasets
+manually from [Huggingface](https://huggingface.co/yichaozhou/nerd/tree/main) and proceed accordingly.
 
 ### Training (Optional)
 Execute the following commands to train the neural networks from scratch with four GPUs (specified by `-d 0,1,2,3`):
@@ -88,14 +88,14 @@ The checkpoints and logs will be written to `logs/` accordingly.
 ### Pre-Trained Models
 ```bash
 cd logs/
-../misc/gdrive-download.sh 1VVd11U_8wPtrLKjufvcdbJ59h0AJQwCW 200610-234002-8ee0ad2-shapenet-latest.zip  # ShapeNet/Symmetry
-../misc/gdrive-download.sh 1HcDCWRbafN4GKC4DzeG17Fo7iXimYI0v 200513-030330-c8e671c-shapenet-finetune.zip  # ShapeNet/Depth
-../misc/gdrive-download.sh 1Nug2c3u1THbPNmTaiGlR8R508nDHP43Q 201113-224159-ec0e932-pix3d-001008000.zip  # Pix3d/Symmetry
+wget https://huggingface.co/yichaozhou/nerd/resolve/main/Pre-Trained/201113-224159-ec0e932-pix3d.zip  # Pix3d/Symmetry
+wget https://huggingface.co/yichaozhou/nerd/resolve/main/Pre-Trained/200610-234002-8ee0ad2-shapenet.zip  # ShapeNet/Depth
+wget https://huggingface.co/yichaozhou/nerd/resolve/main/Pre-Trained/200513-030330-c8e671c-shapenet-finetune.zip  # ShapeNet/Symmetry
 unzip *.zip
 rm *.zip
 cd ..
 ```
-Alternatively, you can download our reference pre-trained models for [ShapeNet (Symmetry)](https://drive.google.com/file/d/1VVd11U_8wPtrLKjufvcdbJ59h0AJQwCW), [ShapeNet (Depth)](https://drive.google.com/file/d/1HcDCWRbafN4GKC4DzeG17Fo7iXimYI0v), and [Pix3D](https://drive.google.com/file/d/1Nug2c3u1THbPNmTaiGlR8R508nDHP43Q).
+Alternatively, you can download our reference pre-trained from [Huggingface](https://huggingface.co/yichaozhou/nerd/tree/main/Pre-Trained).
 
 ### Evaluation
 
